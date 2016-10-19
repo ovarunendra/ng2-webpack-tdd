@@ -6,12 +6,13 @@ import { Question } from '../../models';
 
 @Component({
     selector: 'dynamic-form',
-    template: ''
+    template: require('./dynamic-form.component.html')
 })
 export class DynamicFormComponent implements OnInit {
     @Input() questions:Array<Question>;
 
     formGroup: FormGroup;
+    payload: string;
 
     ngOnInit() {
         this.formGroup = this.generateForm(this.questions || []);
@@ -31,5 +32,9 @@ export class DynamicFormComponent implements OnInit {
         }
 
         return controls;
+    }
+
+    submit() {
+        this.payload = JSON.stringify(this.formGroup.value);
     }
 }

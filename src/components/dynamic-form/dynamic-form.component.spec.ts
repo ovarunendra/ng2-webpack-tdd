@@ -8,13 +8,14 @@ import {
 } from '@angular/forms';
 
 import { DynamicFormComponent } from './dynamic-form.component';
+import { DynamicQuestionComponent } from '../dynamic-question/dynamic-question.component';
 
 describe('Component: DynamicFormComponent', () => {
     let component: DynamicFormComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DynamicFormComponent],
+            declarations: [DynamicFormComponent, DynamicQuestionComponent],
             imports: [ReactiveFormsModule]
         });
 
@@ -51,5 +52,28 @@ describe('Component: DynamicFormComponent', () => {
         expect(Object.keys(component.formGroup.controls)).toEqual([
             'first', 'second'
         ]);
+    });
+
+    it('should set the `payload` to a stringified version of our form values', () => {
+        component.questions = [
+            {
+                controlType: 'text',
+                id: 'first',
+                label: 'My First',
+                required: false
+            },
+            {
+                controlType: 'text',
+                id: 'second',
+                label: 'Second!',
+                required: true
+            }
+        ];
+        component.ngOnInit();
+
+        component.formGroup.controls['first'].setValue('pizza');
+        component.submit();
+
+        expect(component.payload).toEqual(JSON.stringify({first: 'pizza', second: ''}));
     });
 })

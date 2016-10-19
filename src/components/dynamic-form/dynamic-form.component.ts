@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -8,13 +8,13 @@ import { Question } from '../../models';
     selector: 'dynamic-form',
     template: require('./dynamic-form.component.html')
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnChanges {
     @Input() questions:Array<Question>;
 
     formGroup: FormGroup;
     payload: string;
 
-    ngOnInit() {
+    ngOnChanges() {
         this.formGroup = this.generateForm(this.questions || []);
     }
 

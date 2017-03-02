@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormService } from '../../services/form.service';
 import { RestService } from '../../services/rest.service';
 
+let nlp = require('nlp_compromise');
+
 import { FormData, Question } from '../../models';
 
 @Component({
@@ -21,5 +23,10 @@ export class AppComponent {
 
     selectForm(formId: number) {
         this.selectedForm = this.formService.getForm(formId);
+    }
+
+    countWords(title: string) {
+        console.log("Is Plural: "+nlp.noun(title).is_plural());
+        alert("Title: "+nlp.noun(title).pluralize());
     }
 }
